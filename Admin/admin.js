@@ -2,8 +2,8 @@ const API_BASE = 'https://jbin.ylo.one/api.php';
 
 let appState = {
     apiKey: 'b82cb56a5bc1c3271d8e9ae3a38c2ff9a6ee5ef3f310b2ede906b615f27894cb',
-    privateBinId: '08cfaee0aedb43d0993ecd6696f8e918', 
-    publicBinId: 'f91d8e054c5d295cd148d89e9296139a',  
+    privateBinId: '08cfaee0aedb43d0993ecd6696f8e918',
+    publicBinId: 'f91d8e054c5d295cd148d89e9296139a',
     globalSettings: {
         senderName: 'Andrew Reinert',
         cardFrontMessage: 'Wishing you a wonderful Christmas!',
@@ -47,7 +47,7 @@ function switchTab(tabName) {
         content.classList.remove('active');
     });
     document.getElementById(`tab-${tabName}`).classList.add('active');
-    
+
     if (window.innerWidth <= 768) {
         toggleMobileMenu();
     }
@@ -105,7 +105,7 @@ async function makeApiRequest(endpoint, method = 'GET', data = null, requireAuth
 }
 
 async function loadData() {
-    const binId = appState.privateBinId; 
+    const binId = appState.privateBinId;
 
     if (!binId) {
         return;
@@ -120,7 +120,8 @@ async function loadData() {
         }
 
         if (result.data.friends) {
-            const baseUrl = window.location.origin + window.location.pathname.replace(/admin-[^\/]+\/.*$/, 'card/index.html');
+            // const baseUrl = window.location.origin + window.location.pathname.replace(/admin-[^\/]+\/.*$/, 'card/index.html');
+            const baseUrl = window.location.origin + window.location.pathname.replace(/Admin\/.*$/, 'Karte/index.html');
             let needsAutoSave = false;
 
             appState.friends = result.data.friends.map(friend => {
@@ -169,31 +170,31 @@ async function autoSave() {
     const privatePayload = {
         data: {
             globalSettings: appState.globalSettings,
-            friends: appState.friends, 
+            friends: appState.friends,
             lastUpdated: new Date().toISOString()
         },
-        is_public: false  
+        is_public: false
     };
 
     const publicFriends = appState.friends.map(friend => ({
         name: friend.name,
-        code: friend.code, 
+        code: friend.code,
         customFrontMessage: friend.customFrontMessage,
         customBackMessage: friend.customBackMessage,
         envelopeColor: friend.envelopeColor,
         envelopeTextColor: friend.envelopeTextColor,
         titleColor: friend.titleColor,
         customImageUrl: friend.customImageUrl,
-        emailHTML: friend.emailHTML 
+        emailHTML: friend.emailHTML
     }));
 
     const publicPayload = {
         data: {
             globalSettings: appState.globalSettings,
-            friends: publicFriends, 
+            friends: publicFriends,
             lastUpdated: new Date().toISOString()
         },
-        is_public: true  
+        is_public: true
     };
 
     const [privateResult, publicResult] = await Promise.all([
@@ -269,7 +270,8 @@ function renderFriendsList() {
 
 function renderLinksList() {
     const container = document.getElementById('linksList');
-    const baseUrl = window.location.origin + window.location.pathname.replace(/admin-[^\/]+\/.*$/, 'card/index.html');
+    //const baseUrl = window.location.origin + window.location.pathname.replace(/admin-[^\/]+\/.*$/, 'card/index.html');
+    const baseUrl = window.location.origin + window.location.pathname.replace(/Admin\/.*$/, 'Karte/index.html');
 
     if (appState.friends.length === 0) {
         container.innerHTML = '<p class="empty-state">No friends added yet. Add friends to generate links.</p>';
@@ -277,8 +279,8 @@ function renderLinksList() {
     }
 
     container.innerHTML = appState.friends.map((friend, index) => {
-        const code = friend.code || generateUniqueCode(); 
-        const url = `${baseUrl}?code=${code}`; 
+        const code = friend.code || generateUniqueCode();
+        const url = `${baseUrl}?code=${code}`;
 
         return `
             <div class="link-item">
@@ -297,7 +299,7 @@ function renderLinksList() {
 
 function renderEmailTemplates() {
     const container = document.getElementById('emailTemplatesList');
-    const baseUrl = window.location.origin + window.location.pathname.replace(/admin-[^\/]+\/.*$/, 'card/index.html');
+    const baseUrl = window.location.origin + window.location.pathname.replace(/Admin\/.*$/, 'Karte/index.html');
 
     if (appState.friends.length === 0) {
         container.innerHTML = '<p class="empty-state">No friends added yet. Add friends to generate email templates.</p>';
@@ -443,7 +445,8 @@ function saveEmailTemplate(index) {
 
 function resetEmailTemplate(index) {
     const friend = appState.friends[index];
-    const baseUrl = window.location.origin + window.location.pathname.replace(/admin-[^\/]+\/.*$/, 'card/index.html');
+    //const baseUrl = window.location.origin + window.location.pathname.replace(/admin-[^\/]+\/.*$/, 'card/index.html');
+    const baseUrl = window.location.origin + window.location.pathname.replace(/Admin\/.*$/, 'Karte/index.html');
     const code = friend.code || generateUniqueCode();
     const url = `${baseUrl}?code=${code}`;
 
@@ -521,7 +524,7 @@ function saveFriend() {
     const name = document.getElementById('friendName').value.trim();
 
     if (!name) {
-        return; 
+        return;
     }
 
     const editIndex = document.getElementById('editFriendIndex').value;
@@ -541,28 +544,29 @@ function saveFriend() {
     if (editIndex === '') {
         friendData.code = generateUniqueCode();
 
-        const baseUrl = window.location.origin + window.location.pathname.replace(/admin-[^\/]+\/.*$/, 'card/index.html');
+        //const baseUrl = window.location.origin + window.location.pathname.replace(/admin-[^\/]+\/.*$/, 'card/index.html');
+        const baseUrl = window.location.origin + window.location.pathname.replace(/Admin\/.*$/, 'Karte/index.html');
         const url = `${baseUrl}?code=${friendData.code}`;
         friendData.emailHTML = createEmailTemplate(friendData.name, url, appState.globalSettings.senderName, friendData.envelopeColor, friendData.envelopeTextColor);
 
         appState.friends.push(friendData);
     } else {
         const existingFriend = appState.friends[parseInt(editIndex)];
-        friendData.code = existingFriend.code || generateUniqueCode(); 
-        friendData.emailHTML = existingFriend.emailHTML; 
+        friendData.code = existingFriend.code || generateUniqueCode();
+        friendData.emailHTML = existingFriend.emailHTML;
         appState.friends[parseInt(editIndex)] = friendData;
     }
 
     closeFriendModal();
     updateUI();
-    autoSave(); 
+    autoSave();
 }
 
 function deleteFriend(index) {
     if (confirm(`Delete ${appState.friends[index].name}?`)) {
         appState.friends.splice(index, 1);
         updateUI();
-        autoSave(); 
+        autoSave();
     }
 }
 
@@ -645,7 +649,7 @@ function generateUniqueCode() {
     const maxAttempts = 100;
 
     do {
-        code = Math.floor(1000 + Math.random() * 9000).toString(); 
+        code = Math.floor(1000 + Math.random() * 9000).toString();
         attempts++;
     } while (appState.friends.some(f => f.code === code) && attempts < maxAttempts);
 

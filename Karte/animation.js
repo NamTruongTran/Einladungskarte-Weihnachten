@@ -1,5 +1,5 @@
 
-(function() {
+(function () {
     'use strict';
 
     const API_BASE = 'https://jbin.ylo.one/api.php';
@@ -92,11 +92,11 @@
         };
 
         return {
-            lightest: lighten(0.15),    
-            light: lighten(0.05),        
-            base: baseColor,             
-            medium: darken(0.1),         
-            dark: darken(0.2)            
+            lightest: lighten(0.15),
+            light: lighten(0.05),
+            base: baseColor,
+            medium: darken(0.1),
+            dark: darken(0.2)
         };
     }
 
@@ -156,22 +156,22 @@
             document.querySelector('.envelope_front').style.backgroundImage = `url('${frontSvgUrl}')`;
 
             const backColorMap = {
-                '#DFC49F': shades.light,     
-                '#D5BC96': shades.medium,    
-                '#E7CDA8': shades.base       
+                '#DFC49F': shades.light,
+                '#D5BC96': shades.medium,
+                '#E7CDA8': shades.base
             };
             const backSvgUrl = await loadAndColorSVG('images/envelope_back.svg', backColorMap);
             document.querySelector('.envelope_back_outside').style.backgroundImage = `url('${backSvgUrl}')`;
 
             const flapClosedColorMap = {
-                '#D5BC96': shades.medium     
+                '#D5BC96': shades.medium
             };
             const flapClosedUrl = await loadAndColorSVG('images/flap_closed.svg', flapClosedColorMap);
             document.querySelector('.flap_outside').style.backgroundImage = `url('${flapClosedUrl}')`;
 
             const flapOpenedColorMap = {
-                '#CEB38B': shades.medium,    
-                '#efefef': shades.lightest   
+                '#CEB38B': shades.medium,
+                '#efefef': shades.lightest
             };
             const flapOpenedUrl = await loadAndColorSVG('images/flap_opened.svg', flapOpenedColorMap);
             document.querySelector('.flap_inside').style.backgroundImage = `url('${flapOpenedUrl}')`;
@@ -241,39 +241,39 @@
                 envelope.classList.add('movedDown');
                 console.log('Step 2: Envelope flipped and moved down');
             }, scaledTime(2500));
-        }, scaledTime(3500)); 
+        }, scaledTime(3500));
 
         setTimeout(() => {
             console.log('Step 3: Opening envelope');
             envelope.classList.remove('closed');
-        }, scaledTime(7000)); 
+        }, scaledTime(7000));
 
         setTimeout(() => {
             console.log('Step 4: Card sliding out');
             envelope.classList.add('cardRemoved');
-        }, scaledTime(8500)); 
+        }, scaledTime(8500));
 
         setTimeout(() => {
             console.log('Step 5: Envelope dismissing');
             envelope.classList.add('dismissed');
-        }, scaledTime(9900)); 
+        }, scaledTime(9900));
 
         setTimeout(() => {
             console.log('Step 6: Card zooming');
             const card = document.querySelector('.card');
             card.classList.add('zoomed');
-        }, scaledTime(11100)); 
+        }, scaledTime(11100));
 
         setTimeout(() => {
             console.log('Step 7: Card flipping to show back');
             const card = document.querySelector('.card');
             card.classList.add('flipped');
-        }, scaledTime(14300)); 
+        }, scaledTime(14300));
 
         setTimeout(() => {
             console.log('Animation complete!');
             window.animationFinished = true;
-        }, scaledTime(15300)); 
+        }, scaledTime(15300));
     }
 
     function onTransitionEnd(element, callback) {
@@ -291,11 +291,11 @@
         });
     }
 
-    window.restartAnimation = function() {
+    window.restartAnimation = function () {
         location.reload();
     };
 
-    window.getTimeScale = function() {
+    window.getTimeScale = function () {
         return timeScale;
     };
 
