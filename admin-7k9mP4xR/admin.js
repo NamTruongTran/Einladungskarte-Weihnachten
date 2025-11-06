@@ -120,8 +120,7 @@ async function loadData() {
         }
 
         if (result.data.friends) {
-            // const baseUrl = window.location.origin + window.location.pathname.replace(/admin-[^\/]+\/.*$/, 'card/index.html');
-            const baseUrl = window.location.origin + window.location.pathname.replace(/Admin\/.*$/, 'Karte/index.html');
+            const baseUrl = window.location.origin + window.location.pathname.replace(/admin-[^\/]+\/.*$/, 'card/index.html');
             let needsAutoSave = false;
 
             appState.friends = result.data.friends.map(friend => {
@@ -270,8 +269,7 @@ function renderFriendsList() {
 
 function renderLinksList() {
     const container = document.getElementById('linksList');
-    //const baseUrl = window.location.origin + window.location.pathname.replace(/admin-[^\/]+\/.*$/, 'card/index.html');
-    const baseUrl = window.location.origin + window.location.pathname.replace(/Admin\/.*$/, 'Karte/index.html');
+    const baseUrl = window.location.origin + window.location.pathname.replace(/admin-[^\/]+\/.*$/, 'card/index.html');
 
     if (appState.friends.length === 0) {
         container.innerHTML = '<p class="empty-state">No friends added yet. Add friends to generate links.</p>';
@@ -299,7 +297,7 @@ function renderLinksList() {
 
 function renderEmailTemplates() {
     const container = document.getElementById('emailTemplatesList');
-    const baseUrl = window.location.origin + window.location.pathname.replace(/Admin\/.*$/, 'Karte/index.html');
+    const baseUrl = window.location.origin + window.location.pathname.replace(/admin-[^\/]+\/.*$/, 'card/index.html');
 
     if (appState.friends.length === 0) {
         container.innerHTML = '<p class="empty-state">No friends added yet. Add friends to generate email templates.</p>';
@@ -383,7 +381,7 @@ function createEmailTemplate(recipientName, cardUrl, senderName, envelopeColor =
                                 <tr>
                                     <td style="padding: 0 0 20px; text-align: center;">
                                         <a href="${cardUrl}" style="display: inline-block; padding: 16px 40px; background-color: ${envelopeColor}; color: ${envelopeTextColor}; text-decoration: none; border-radius: 6px; font-size: 18px; font-weight: bold; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
-                                            🎁 View Card
+                                            🎁 Karte Ansehen
                                         </a>
                                     </td>
                                 </tr>
@@ -445,8 +443,7 @@ function saveEmailTemplate(index) {
 
 function resetEmailTemplate(index) {
     const friend = appState.friends[index];
-    //const baseUrl = window.location.origin + window.location.pathname.replace(/admin-[^\/]+\/.*$/, 'card/index.html');
-    const baseUrl = window.location.origin + window.location.pathname.replace(/Admin\/.*$/, 'Karte/index.html');
+    const baseUrl = window.location.origin + window.location.pathname.replace(/admin-[^\/]+\/.*$/, 'card/index.html');
     const code = friend.code || generateUniqueCode();
     const url = `${baseUrl}?code=${code}`;
 
@@ -544,8 +541,7 @@ function saveFriend() {
     if (editIndex === '') {
         friendData.code = generateUniqueCode();
 
-        //const baseUrl = window.location.origin + window.location.pathname.replace(/admin-[^\/]+\/.*$/, 'card/index.html');
-        const baseUrl = window.location.origin + window.location.pathname.replace(/Admin\/.*$/, 'Karte/index.html');
+        const baseUrl = window.location.origin + window.location.pathname.replace(/admin-[^\/]+\/.*$/, 'card/index.html');
         const url = `${baseUrl}?code=${friendData.code}`;
         friendData.emailHTML = createEmailTemplate(friendData.name, url, appState.globalSettings.senderName, friendData.envelopeColor, friendData.envelopeTextColor);
 
