@@ -2,7 +2,7 @@
     "redirects": [
         {
             "source": "/",
-            "destination": "/Admin/",
+            "destination": "/admin-7k9mP4xR/",
             "permanent": false
         }
     ]
