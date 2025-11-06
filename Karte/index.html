@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Weihnachten</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=yes">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="transparent desktopPreview">
+    <div id="loader" style="display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: transparent; z-index: 9999; justify-content: center; align-items: center; flex-direction: column;">
+        <div style="width: 50px; height: 50px; border: 5px solid rgba(0,0,0,0.3); border-top-color: #333; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+        <p style="color: #333; margin-top: 20px; font-family: 'Lato', sans-serif;">Loading your card...</p>
+    </div>
+    <style>
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+
+    <div id="stage" class="loading">
+        <div id="mv_msg">
+            <div class="animation">
+                <div class="envelope closed">
+                    <div class="envelope_front">
+                        <div class="sender-name">Andrew Reinert</div>
+                        <div class="receiver-name">Linda Seffert</div>
+                        <img src="images/stamp.svg" alt="Stamp" class="stamp">
+                    </div>
+
+                    <div class="envelope_back">
+                        <div class="envelope_back_outside"></div>
+                        <div class="lining"></div>
+                        <div class="shadow-object"></div>
+                        <div class="flap_outside"></div>
+                        <div class="flap_inside"></div>
+
+                        <div class="card LANDSCAPE">
+                            <div class="card-front">
+                                <div class="card-image-placeholder"></div>
+                                <div class="card-content">
+                                    <h1 class="card-title">Merry<br>Christmas</h1>
+                                    <p class="card-message">I wish you all the best for the future.</p>
+                                    <p class="card-sender">Andrew Reinert</p>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <div class="card-back-content">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="animation.js"></script>
+</body>
+</html>

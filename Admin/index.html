@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christmas Card Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+    <div class="mobile-overlay" onclick="toggleMobileMenu()"></div>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>🎄 Christmas<br>Cards</h1>
+                <p class="sidebar-subtitle">Admin Panel</p>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-tab active" data-tab="settings" onclick="switchTab('settings')">
+                    <span class="tab-icon">🎨</span>
+                    <span class="tab-label">Settings</span>
+                </button>
+                <button class="nav-tab" data-tab="friends" onclick="switchTab('friends')">
+                    <span class="tab-icon">👥</span>
+                    <span class="tab-label">Friends</span>
+                </button>
+                <button class="nav-tab" data-tab="links" onclick="switchTab('links')">
+                    <span class="tab-icon">🔗</span>
+                    <span class="tab-label">Card Links</span>
+                </button>
+                <button class="nav-tab" data-tab="emails" onclick="switchTab('emails')">
+                    <span class="tab-icon">📧</span>
+                    <span class="tab-label">Email Templates</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="status-bar">
+                    <span id="statusIndicator" class="status-indicator">●</span>
+                    <span id="statusText" class="status-text">Ready</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="tab-content active" id="tab-settings">
+                <div class="content-header">
+                    <h2>🎨 Global Card Settings</h2>
+                    <p class="content-subtitle">Configure default settings for all cards</p>
+                </div>
+                <div class="content-body">
+                    <div class="form-section">
+                        <h3>Sender Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="senderName">Your Name</label>
+                                <input type="text" id="senderName" placeholder="e.g., Andrew Reinert">
+                                <small>This will appear on the envelope and card</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Default Messages</h3>
+                        <div class="form-group">
+                            <label for="cardFrontMessage">Card Front Message (Short)</label>
+                            <textarea id="cardFrontMessage" rows="2" placeholder="Wishing you a wonderful Christmas!"></textarea>
+                            <small>Short greeting shown on the card front</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="cardBackMessage">Card Back Message (Long)</label>
+                            <textarea id="cardBackMessage" rows="4" placeholder="I wish you all the best for the future. May this holiday season bring you joy and happiness..."></textarea>
+                            <small>Longer personal message shown on the card back</small>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Color Theme</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="envelopeColor">Envelope Color</label>
+                                <input type="color" id="envelopeColor" value="#E7CDA8">
+                            </div>
+                            <div class="form-group">
+                                <label for="envelopeTextColor">Envelope Text Color</label>
+                                <input type="color" id="envelopeTextColor" value="#5a4a3a">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="titleColor">Card Title Color</label>
+                                <input type="color" id="titleColor" value="#2c5f2d">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Default Card Image</h3>
+                        <div class="form-group">
+                            <label for="globalImageUrl">Default Image URL (Optional)</label>
+                            <input type="text" id="globalImageUrl" placeholder="https://example.com/image.jpg">
+                            <small>This image will be used for all cards unless a friend has a custom image</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-friends">
+                <div class="content-header">
+                    <h2>👥 Friends List</h2>
+                    <button id="addFriendBtn" class="btn btn-success">➕ Add Friend</button>
+                </div>
+                <div class="content-body">
+                    <div id="friendsList" class="friends-list">
+                    </div>
+                    <div id="emptyState" class="empty-state">
+                        <p>📭 No friends added yet. Click "Add Friend" to start!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-links">
+                <div class="content-header">
+                    <h2>🔗 Generated Card Links</h2>
+                    <p class="content-subtitle">Share these personalized links with your friends</p>
+                </div>
+                <div class="content-body">
+                    <div id="linksList" class="links-list">
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-emails">
+                <div class="content-header">
+                    <h2>📧 Email Templates</h2>
+                    <p class="content-subtitle">Copy and paste these email templates into your email client</p>
+                </div>
+                <div class="content-body">
+                    <div id="emailTemplatesList" class="email-templates-list">
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="friendModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add Friend</h3>
+                <button class="modal-close" onclick="closeFriendModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editFriendIndex">
+                <div class="form-group">
+                    <label for="friendName">Friend's Name *</label>
+                    <input type="text" id="friendName" placeholder="Linda Seffert" required>
+                </div>
+                <div class="form-group">
+                    <label for="friendEmail">Email (Optional)</label>
+                    <input type="email" id="friendEmail" placeholder="linda@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="friendFrontMessage">Card Front Message (Optional)</label>
+                    <textarea id="friendFrontMessage" rows="2" placeholder="Leave empty to use default"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="friendBackMessage">Card Back Message (Optional)</label>
+                    <textarea id="friendBackMessage" rows="3" placeholder="Leave empty to use default"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="friendEnvelopeColor">Envelope Color</label>
+                        <input type="color" id="friendEnvelopeColor">
+                    </div>
+                    <div class="form-group">
+                        <label for="friendEnvelopeTextColor">Envelope Text Color</label>
+                        <input type="color" id="friendEnvelopeTextColor">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="friendTitleColor">Card Title Color</label>
+                        <input type="color" id="friendTitleColor">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="friendCustomCard">
+                        Use custom front image
+                    </label>
+                    <input type="text" id="friendImageUrl" placeholder="Image URL" style="display:none; margin-top: 8px;">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeFriendModal()">Cancel</button>
+                <button id="saveFriendBtn" class="btn btn-primary">Save Friend</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="cardPreviewModal" class="card-preview-modal" onclick="closeCardPreview()">
+        <div class="card-preview-content" onclick="event.stopPropagation()">
+            <button class="card-preview-close" onclick="closeCardPreview()">×</button>
+            <iframe id="cardPreviewFrame" class="card-preview-iframe"></iframe>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<svg viewBox="0 0 623 527" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <!-- Radial gradient from lighter top-left to darker edges -->
+  <radialGradient id="envelopeGradient" cx="30%" cy="30%" r="90%" fx="20%" fy="20%">
+    <stop offset="0%" style="stop-color:#F0DDC0;stop-opacity:1" />
+    <stop offset="40%" style="stop-color:#E7CDA8;stop-opacity:1" />
+    <stop offset="75%" style="stop-color:#D5BC96;stop-opacity:1" />
+    <stop offset="100%" style="stop-color:#C8AF88;stop-opacity:1" />
+  </radialGradient>
+  
+  <!-- Subtle shadow for depth -->
+  <filter id="innerShadow" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+    <feOffset dx="1" dy="1" result="offsetblur"/>
+    <feComponentTransfer>
+      <feFuncA type="linear" slope="0.15"/>
+    </feComponentTransfer>
+    <feMerge>
+      <feMergeNode/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+</defs>
+
+<!-- Main envelope rectangle with gradient and rounded corners -->
+<rect width="623" height="527" rx="2" ry="2" fill="url(#envelopeGradient)" filter="url(#innerShadow)"/>
+</svg>

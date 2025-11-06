@@ -1,0 +1,486 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden;
+}
+
+body.transparent {
+    background: transparent;
+}
+
+body.white {
+    background: white;
+}
+
+:root {
+    --envelope-size: min(90vw, 90vh);
+}
+
+#stage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    background-color: transparent;
+}
+
+#stage.loading {
+    background-color: transparent;
+}
+
+#mv_msg {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 3;
+}
+
+#mv_msg .animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    perspective: 2000px;
+    overflow: visible;
+    z-index: 1;
+}
+
+#mv_msg .envelope {
+    position: absolute;
+    left: 50%;
+    top: -100vh;
+    width: var(--envelope-size);
+    height: calc(var(--envelope-size) * 0.842);
+    transform: translateX(-50%);
+    transform-style: preserve-3d;
+    transition: all 1.5s ease-in-out;
+}
+
+#mv_msg .envelope.slideIn {
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#mv_msg .envelope * {
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: 100% auto;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transition: all 1.2s ease-in-out;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transform-origin: 50% 0;
+    image-rendering: optimizeQuality;
+}
+
+#mv_msg .envelope.flip {
+    transform: translate(-50%, -50%) rotateY(180deg);
+}
+
+#mv_msg .envelope_front {
+    -webkit-box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.3);
+    -moz-transform: translateZ(2px);
+    -webkit-transform: translateZ(2px);
+    transform: translateZ(2px);
+    border-radius: 2px 2px 1px 1px;
+    background-image: url('images/envelope_front.svg');
+}
+
+#mv_msg .envelope_front * {
+    width: auto;
+    height: auto;
+}
+
+#mv_msg .envelope_front .sender-name {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(14px, 2.8vw, 20px);
+    color: #5a4a3a;
+    z-index: 10;
+    font-weight: 500;
+    transform: translateZ(3px);
+}
+
+#mv_msg .envelope_front .receiver-name {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateZ(3px);
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(20px, 4vw, 32px);
+    color: #5a4a3a;
+    z-index: 10;
+    font-weight: 700;
+    text-align: center;
+    white-space: nowrap;
+}
+
+#mv_msg .envelope_front .stamp {
+    position: absolute;
+    display: block;
+    top: 5%;
+    right: 5%;
+    left: auto;
+    width: clamp(40px, 8vw, 80px);
+    height: auto;
+    z-index: 10;
+    opacity: 0.9;
+}
+
+#mv_msg .envelope_back {
+    -moz-transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+#mv_msg .envelope.flip .envelope_back {
+    -moz-transform: rotateY(180deg) translateZ(1px);
+    -webkit-transform: rotateY(180deg) translateZ(1px);
+    transform: rotateY(180deg) translateZ(1px);
+}
+
+#mv_msg .envelope_back_outside {
+    -moz-transform: translateZ(0.3px);
+    -webkit-transform: translateZ(0.33px);
+    transform: translateZ(0.33px);
+    border-radius: 2px 2px 1px 1px;
+    background-image: url('images/envelope_back.svg');
+}
+
+#mv_msg .envelope .envelope_back .shadow-object {
+    -webkit-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+#mv_msg .envelope .envelope_back .lining {
+    -moz-transform: translateZ(-1px);
+    -webkit-transform: translateZ(-1px);
+    transform: translateZ(-1px);
+    width: 99%;
+    background-color: #d0d0d0;
+}
+
+#mv_msg .animation .envelope.closed .lining {
+    display: none;
+}
+
+#mv_msg .envelope > .flap_outside {
+    -moz-transform: rotateX(-180deg) rotateY(180deg) translateY(-1.2px) translateX(0) translateZ(2px);
+    -webkit-transform: rotateX(-180deg) rotateY(180deg) translateY(-1.2px) translateX(0) translateZ(2px);
+    transform: rotateX(-180deg) rotateY(180deg) translateY(-1.2px) translateX(0) translateZ(2px);
+}
+
+#mv_msg .envelope .envelope_back .flap_outside {
+    -moz-transform: rotateX(180deg) translateZ(1px);
+    -webkit-transform: rotateX(180deg) translateZ(1px);
+    transform: rotateX(180deg) translateZ(1px);
+    background-image: url('images/flap_closed.svg');
+}
+
+#mv_msg .envelope.flip .envelope_back .flap_outside {
+    -moz-transform: rotateX(180deg) translateZ(1px);
+    -webkit-transform: rotateX(180deg) translateZ(1px);
+    transform: rotateX(180deg) translateZ(1px);
+}
+
+#mv_msg .envelope.closed .envelope_back .flap_outside {
+    -moz-transform: rotateX(0deg) translateZ(1px);
+    -webkit-transform: rotateX(0deg) translateZ(1px);
+    transform: rotateX(0deg) translateZ(1px);
+}
+
+#mv_msg .animation .envelope.closed > .flap_outside {
+    display: none;
+}
+
+#mv_msg .envelope .flap_inside {
+    top: -100%;
+    -moz-transform-origin: 0 100%;
+    -webkit-transform-origin: 0 100%;
+    transform-origin: 0 100%;
+    -moz-transform: rotateX(0deg) translateZ(0.1px) translateY(0);
+    -webkit-transform: rotateX(0deg) translateZ(0.1px) translateY(0);
+    transform: rotateX(0deg) translateZ(0.1px) translateY(0);
+    background-position: center bottom;
+    background-image: url('images/flap_opened.svg');
+}
+
+#mv_msg .envelope.closed .flap_inside {
+    top: -100%;
+    -moz-transform: rotateX(-180deg) translateZ(0.1px) translateY(0px);
+    -webkit-transform: rotateX(-180deg) translateZ(0.1px) translateY(0px);
+    transform: rotateX(-180deg) translateZ(0.1px) translateY(0px);
+}
+
+#mv_msg .envelope.closed > .flap_outside {
+    -moz-transform: rotateX(0deg) translateZ(2px) translateY(-1.2px);
+    -webkit-transform: rotateX(0deg) translateZ(2px) translateY(-1.2px);
+    transform: rotateX(0deg) translateZ(2px) translateY(-1.2px);
+}
+
+#mv_msg .animation .envelope .card {
+    width: 93.75%;
+    height: 91.7%;
+    left: 2.94%;
+    top: 0.44%;
+    transform: translateZ(0.2px);
+    transform-style: preserve-3d;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+#mv_msg .animation .envelope .card.LANDSCAPE {
+    height: 78.6%;
+    margin-top: 13%;
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+.card-front {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#mv_msg .envelope .card-front .card-image-placeholder,
+#mv_msg .envelope .card-front .card-content,
+#mv_msg .envelope .card-front .card-title,
+#mv_msg .envelope .card-front .card-message,
+#mv_msg .envelope .card-front .card-sender {
+    position: static;
+    width: auto;
+    height: auto;
+    top: auto;
+    left: auto;
+    transform: none;
+    background-size: auto;
+    background-position: 0 0;
+}
+
+#mv_msg .envelope .card-front .card-image-placeholder {
+    width: 100%;
+    height: 50%;
+    padding: clamp(15px, 3vw, 25px) clamp(15px, 3vw, 25px) 0;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+#mv_msg .envelope .card-front .card-image-placeholder::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: #d0d0d0;
+    background-image: linear-gradient(135deg, #e8e8e8 25%, transparent 25%),
+                      linear-gradient(225deg, #e8e8e8 25%, transparent 25%),
+                      linear-gradient(45deg, #e8e8e8 25%, transparent 25%),
+                      linear-gradient(315deg, #e8e8e8 25%, #d0d0d0 25%);
+    background-position: 10px 0, 10px 0, 0 0, 0 0;
+    background-size: 20px 20px;
+    background-repeat: repeat;
+}
+
+#mv_msg .envelope .card-front .card-image-placeholder::after {
+    content: '';
+    font-size: clamp(12px, 2vw, 16px);
+    color: #999;
+}
+
+#mv_msg .envelope .card-front .card-image-placeholder .custom-card-image {
+    position: absolute;
+    inset: clamp(15px, 3vw, 25px) clamp(15px, 3vw, 25px) 0;
+    width: calc(100% - 2 * clamp(15px, 3vw, 25px));
+    height: calc(100% - clamp(15px, 3vw, 25px));
+    object-fit: cover;
+    object-position: center;
+    z-index: 1;
+}
+
+#mv_msg .envelope .card-front .card-content {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    padding: clamp(15px, 3vw, 30px) clamp(20px, 4vw, 40px);
+    background-color: #ffffff;
+}
+
+#mv_msg .envelope .card-front .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 5vw, 42px);
+    font-weight: 700;
+    color: #2c5f2d;
+    text-align: right;
+    line-height: 1.1;
+    margin: 0 0 clamp(10px, 2vw, 18px) 0;
+    width: 50%;
+    letter-spacing: 0.02em;
+}
+
+#mv_msg .envelope .card-front .card-message {
+    font-family: 'Lato', sans-serif;
+    font-size: clamp(9px, 1.6vw, 13px);
+    font-weight: 300;
+    color: #555;
+    text-align: right;
+    line-height: 1.5;
+    margin: 0 0 clamp(6px, 1.2vw, 10px) 0;
+    width: 50%;
+}
+
+#mv_msg .envelope .card-front .card-sender {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(11px, 2vw, 16px);
+    font-weight: 600;
+    color: #2c5f2d;
+    text-align: right;
+    margin: 0;
+    width: 50%;
+}
+
+@media (max-width: 600px) {
+    #mv_msg .envelope .card-front .card-title,
+    #mv_msg .envelope .card-front .card-message,
+    #mv_msg .envelope .card-front .card-sender {
+        width: 100%;
+    }
+
+    #mv_msg .envelope .card-front .card-title br {
+        display: none;
+    }
+}
+
+.card-back {
+    background-color: #ffffff;
+    transform: rotateY(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(20px, 4vw, 40px);
+}
+
+#mv_msg .envelope .card-back .card-back-content,
+#mv_msg .envelope .card-back .card-back-content p {
+    position: static;
+    width: auto;
+    height: auto;
+    top: auto;
+    left: auto;
+    transform: none;
+    background-size: auto;
+    background-position: 0 0;
+    background-image: none;
+}
+
+#mv_msg .envelope .card-back .card-back-content {
+    width: 100%;
+    max-width: 85%;
+}
+
+#mv_msg .envelope .card-back .card-back-content p {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(12px, 2.2vw, 16px);
+    font-weight: 400;
+    color: #2c2c2c;
+    text-align: justify;
+    line-height: 1.8;
+    letter-spacing: 0.01em;
+    margin: 0 0 clamp(14px, 2.5vw, 20px) 0;
+    text-indent: clamp(20px, 3vw, 30px);
+}
+
+#mv_msg .envelope .card-back .card-back-content p:first-child {
+    text-indent: 0;
+}
+
+#mv_msg .envelope .card-back .card-back-content p:last-child {
+    margin-bottom: 0;
+}
+
+#mv_msg .envelope .card.flipped {
+    transition: transform 1s ease-in-out;
+}
+
+#mv_msg .envelope .card.zoomed.flipped {
+    transform: scale(1.192) translate3D(0, -82%, 0) rotateY(180deg);
+}
+
+#mv_msg .envelope.cardRemoved .card.flipped {
+    transform: translate3d(0, -82%, 0.2px) rotateY(180deg);
+}
+
+#mv_msg .animation .envelope.closed .envelope_back .card {
+    display: none;
+}
+
+#mv_msg .envelope.cardRemoved .card {
+    transform: translate3d(0, -82%, 0.2px);
+}
+
+#mv_msg .envelope .card.zoomed {
+    transition: all 1.2s ease-in-out;
+    transform: scale(1.192) translate3D(0, -82%, 0);
+}
+
+#mv_msg .envelope.dismissed .envelope_back .flap_inside {
+    transform: rotateX(0deg) translateZ(0.1px) translate3d(0, 200vh, 0);
+}
+
+#mv_msg .envelope.dismissed .envelope_back .flap_outside {
+    transform: rotateX(180deg) translateZ(1px) translate3d(0, 200vh, 0);
+}
+
+#mv_msg .envelope.dismissed .envelope_back .envelope_back_outside {
+    transform: translateZ(0.33px) translate3d(0, 200vh, 0);
+}
+
+#mv_msg .envelope.dismissed .envelope_back .shadow-object {
+    transform: translate3d(0, 200vh, 0);
+}
+
+#mv_msg .envelope.dismissed .envelope_back .lining {
+    transform: translateZ(-1px) translate3d(0, 200vh, 0);
+}
+
+#mv_msg .envelope.movedDown {
+    top: calc(50vh + var(--envelope-size) * 0.1);
+    transform: translateX(-50%);
+}
+
+#mv_msg .envelope.movedDown.flip {
+    transform: translateX(-50%) rotateY(180deg);
+}
+
